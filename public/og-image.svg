@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#0F0F13"/>
+    </linearGradient>
+    <radialGradient id="glow-purple" cx="0" cy="0" r="650" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-pink" cx="1200" cy="630" r="550" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#EC4899" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#EC4899" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="title-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="60%" stop-color="#F9FAFB"/>
+      <stop offset="100%" stop-color="#F9A8D4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background layers -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow-purple)"/>
+  <rect width="1200" height="630" fill="url(#glow-pink)"/>
+
+  <!-- Subtle border -->
+  <rect x="1" y="1" width="1198" height="628" rx="0" fill="none" stroke="#2D2D3D" stroke-width="1.5"/>
+
+  <!-- Decorative sparkles — top right -->
+  <path d="M1080,80 L1083,96 L1099,99 L1083,102 L1080,118 L1077,102 L1061,99 L1077,96 Z" fill="#7C3AED" opacity="0.5"/>
+  <path d="M1130,42 L1131.8,50 L1140,51.8 L1131.8,53.6 L1130,61.6 L1128.2,53.6 L1120,51.8 L1128.2,50 Z" fill="#EC4899" opacity="0.4"/>
+  <circle cx="1060" cy="55" r="3" fill="#A78BFA" opacity="0.45"/>
+  <circle cx="1150" cy="95" r="2" fill="#F9A8D4" opacity="0.35"/>
+  <circle cx="1100" cy="140" r="1.5" fill="#7C3AED" opacity="0.3"/>
+
+  <!-- Decorative sparkles — bottom left -->
+  <path d="M80,560 L82.5,572 L94.5,574.5 L82.5,577 L80,589 L77.5,577 L65.5,574.5 L77.5,572 Z" fill="#EC4899" opacity="0.35"/>
+  <circle cx="55" cy="540" r="2.5" fill="#A78BFA" opacity="0.3"/>
+  <circle cx="110" cy="598" r="1.5" fill="#7C3AED" opacity="0.25"/>
+
+  <!-- Logo icon box (200x200) centered vertically, left area -->
+  <rect x="88" y="215" width="200" height="200" rx="44" fill="#1A1A24"/>
+  <rect x="88" y="215" width="200" height="200" rx="44" fill="none" stroke="#2D2D3D" stroke-width="1.5"/>
+
+  <!-- 4-pointed star inside logo: outer r=63, inner r=22, center at 188,315 -->
+  <path d="M188,252 L203.5,299.5 L251,315 L203.5,330.5 L188,378 L172.5,330.5 L125,315 L172.5,299.5 Z" fill="url(#logo-grad)"/>
+  <circle cx="243" cy="259" r="6" fill="#A78BFA" opacity="0.7"/>
+  <circle cx="133" cy="371" r="4" fill="#EC4899" opacity="0.5"/>
+
+  <!-- "AdFlow AI" title -->
+  <text
+    x="360" y="300"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="86"
+    font-weight="800"
+    letter-spacing="-2"
+    fill="url(#title-grad)"
+  >AdFlow AI</text>
+
+  <!-- Tagline line 1 -->
+  <text
+    x="362" y="368"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="26"
+    font-weight="400"
+    fill="#9CA3AF"
+    letter-spacing="0.2"
+  >Ürün Linkini Verin, Reklam Kampanyanızı</text>
+
+  <!-- Tagline line 2 -->
+  <text
+    x="362" y="406"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="26"
+    font-weight="400"
+    fill="#9CA3AF"
+    letter-spacing="0.2"
+  >Saniyeler İçinde Hazırlayalım.</text>
+
+  <!-- AI badge -->
+  <rect x="362" y="450" width="220" height="44" rx="22" fill="#1A1A24" stroke="#2D2D3D" stroke-width="1"/>
+  <text
+    x="472" y="478"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="17"
+    font-weight="500"
+    fill="#A78BFA"
+    text-anchor="middle"
+    letter-spacing="0.5"
+  >✦  Powered by AI</text>
+
+  <!-- URL badge bottom right -->
+  <text
+    x="1110" y="590"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="16"
+    fill="#4B5563"
+    text-anchor="end"
+  >adflow.ai</text>
+</svg>
