@@ -2,9 +2,13 @@
 
 import { createBrowserClient } from '@supabase/ssr'
 
-const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
-               process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
-               !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const checkMock = () => {
+  const hasMockSession = typeof document !== 'undefined' && document.cookie.includes('adflow-mock-session=true')
+  return hasMockSession || 
+         !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+         process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
+         !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+}
 
 // Mock Supabase Client Proxy for Client Components
 export const createMockSupabase = () => {
@@ -19,7 +23,7 @@ export const createMockSupabase = () => {
         return (resolve: any) => resolve(mockResult)
       }
       
-      if (['select', 'eq', 'single', 'order', 'limit', 'range', 'insert', 'update', 'upsert', 'delete', 'match', 'or', 'neq', 'gt', 'lt'].includes(prop)) {
+      if (['select', 'eq', 'single', 'order', 'limit', 'range', 'insert', 'update', 'upsert', 'delete', 'match', 'or', 'neq', 'gt', 'lt', 'in'].includes(prop)) {
         return (...args: any[]) => {
           if (prop === 'single') {
             target._single = true
@@ -116,7 +120,7 @@ export const createMockSupabase = () => {
 }
 
 export function createClient() {
-  if (isMock) return createMockSupabase()
+  if (checkMock()) return createMockSupabase()
 
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

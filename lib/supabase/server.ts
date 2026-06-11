@@ -2,9 +2,19 @@ import { createServerClient } from '@supabase/ssr'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 
-const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
-               process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
-               !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const checkMock = async () => {
+  try {
+    const cookieStore = await cookies()
+    const hasMockSession = cookieStore.get('adflow-mock-session')?.value === 'true'
+    if (hasMockSession) return true
+  } catch {
+    // Ignore cookies read error in some contexts
+  }
+  
+  return !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+         process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
+         !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+}
 
 // Mock Supabase Client Proxy
 export const createMockSupabase = () => {
@@ -19,7 +29,7 @@ export const createMockSupabase = () => {
         return (resolve: any) => resolve(mockResult)
       }
       
-      if (['select', 'eq', 'single', 'order', 'limit', 'range', 'insert', 'update', 'upsert', 'delete', 'match', 'or', 'neq', 'gt', 'lt'].includes(prop)) {
+      if (['select', 'eq', 'single', 'order', 'limit', 'range', 'insert', 'update', 'upsert', 'delete', 'match', 'or', 'neq', 'gt', 'lt', 'in'].includes(prop)) {
         return (...args: any[]) => {
           if (prop === 'single') {
             target._single = true
@@ -116,7 +126,7 @@ export const createMockSupabase = () => {
 }
 
 export async function createClient() {
-  if (isMock) return createMockSupabase()
+  if (await checkMock()) return createMockSupabase()
 
   const cookieStore = await cookies()
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -145,7 +155,7 @@ export async function createClient() {
 }
 
 export async function createServiceClient() {
-  if (isMock) return createMockSupabase()
+  if (await checkMock()) return createMockSupabase()
 
   const cookieStore = await cookies()
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -174,7 +184,10 @@ export async function createServiceClient() {
 }
 
 export function createAdminClient() {
-  if (isMock) return createMockSupabase()
+  const isEnvMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                    process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
+                    !process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (isEnvMock) return createMockSupabase()
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
