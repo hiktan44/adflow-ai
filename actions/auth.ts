@@ -33,6 +33,20 @@ export async function loginAction(
     return { error: parsed.error.errors[0]?.message ?? 'Geçersiz form verisi' }
   }
 
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+
+  if (isMock) {
+    const { cookies } = await import('next/headers')
+    const cookieStore = await cookies()
+    cookieStore.set('adflow-mock-session', 'true', {
+      path: '/',
+      maxAge: 86400,
+      httpOnly: true,
+      secure: true
+    })
+    redirect('/dashboard')
+  }
+
   const supabase = await createClient()
   const { error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
@@ -63,6 +77,12 @@ export async function registerAction(
     return { error: parsed.error.errors[0]?.message ?? 'Geçersiz form verisi' }
   }
 
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+
+  if (isMock) {
+    return { error: 'Demo modunda yeni kayıt oluşturulamaz. Lütfen hazır demo hesabı ile giriş yapın.' }
+  }
+
   const supabase = await createClient()
   const { error } = await supabase.auth.signUp({
     email: parsed.data.email,
@@ -83,6 +103,15 @@ export async function registerAction(
 }
 
 export async function logoutAction(): Promise<void> {
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+
+  if (isMock) {
+    const { cookies } = await import('next/headers')
+    const cookieStore = await cookies()
+    cookieStore.delete('adflow-mock-session')
+    redirect('/login')
+  }
+
   const supabase = await createClient()
   await supabase.auth.signOut()
   redirect('/login')

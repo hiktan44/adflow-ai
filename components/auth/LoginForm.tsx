@@ -12,6 +12,8 @@ export default function LoginForm({ mode }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const action = mode === 'login' ? loginAction : registerAction
 
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+
   const [state, formAction, isPending] = useActionState<AuthResult | null, FormData>(
     action,
     null
@@ -21,6 +23,14 @@ export default function LoginForm({ mode }: LoginFormProps) {
 
   return (
     <form action={formAction} className="space-y-5" noValidate>
+      {isMock && mode === 'login' && (
+        <div className="p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/10 text-yellow-200 text-xs">
+          <p className="font-semibold mb-1">🔑 Demo Giriş Bilgileri:</p>
+          <p>E-posta: <code className="bg-yellow-500/20 px-1 py-0.5 rounded">admin@example.com</code></p>
+          <p className="mt-0.5">Şifre: <code className="bg-yellow-500/20 px-1 py-0.5 rounded">admin123</code></p>
+        </div>
+      )}
+
       {mode === 'register' && (
         <div>
           <label
@@ -57,6 +67,7 @@ export default function LoginForm({ mode }: LoginFormProps) {
           type="email"
           autoComplete="email"
           required
+          defaultValue={isMock && mode === 'login' ? 'admin@example.com' : undefined}
           placeholder="siz@ornek.com"
           className="w-full glass rounded-xl px-4 py-3 text-white placeholder-[#6B7280] border border-[#2D2D3D] focus:border-[#7C3AED] focus:outline-none focus:ring-1 focus:ring-[#7C3AED] transition-colors"
           aria-required="true"
@@ -77,6 +88,7 @@ export default function LoginForm({ mode }: LoginFormProps) {
             type={showPassword ? 'text' : 'password'}
             autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
             required
+            defaultValue={isMock && mode === 'login' ? 'admin123' : undefined}
             minLength={8}
             placeholder="En az 8 karakter"
             className="w-full glass rounded-xl px-4 py-3 pr-12 text-white placeholder-[#6B7280] border border-[#2D2D3D] focus:border-[#7C3AED] focus:outline-none focus:ring-1 focus:ring-[#7C3AED] transition-colors"

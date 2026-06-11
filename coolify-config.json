@@ -1,0 +1,8 @@
+{
+  "build_pack": "dockerfile",
+  "dockerfile_location": "/Dockerfile",
+  "ports_exposes": "3000",
+  "health_check_enabled": true,
+  "health_check_path": "/api/health",
+  "auto_deploy": true
+}
