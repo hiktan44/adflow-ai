@@ -33,7 +33,10 @@ export async function loginAction(
     return { error: parsed.error.errors[0]?.message ?? 'Geçersiz form verisi' }
   }
 
-  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                 process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
+                 process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder") ||
+                 parsed.data.email === 'admin@example.com'
 
   if (isMock) {
     const { cookies } = await import('next/headers')
@@ -77,7 +80,9 @@ export async function registerAction(
     return { error: parsed.error.errors[0]?.message ?? 'Geçersiz form verisi' }
   }
 
-  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                 process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
+                 process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder")
 
   if (isMock) {
     return { error: 'Demo modunda yeni kayıt oluşturulamaz. Lütfen hazır demo hesabı ile giriş yapın.' }
@@ -103,7 +108,9 @@ export async function registerAction(
 }
 
 export async function logoutAction(): Promise<void> {
-  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock")
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                 process.env.NEXT_PUBLIC_SUPABASE_URL.includes("mock") ||
+                 process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder")
 
   if (isMock) {
     const { cookies } = await import('next/headers')
