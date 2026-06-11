@@ -1,0 +1,36 @@
+{
+  "name": "adflow-ai",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "unset __NEXT_PRIVATE_STANDALONE_CONFIG && next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@stripe/stripe-js": "5.8.0",
+    "@supabase/ssr": "0.6.1",
+    "@supabase/supabase-js": "2.49.4",
+    "cloudinary": "2.6.1",
+    "clsx": "2.1.1",
+    "next": "15.3.1",
+    "openai": "4.103.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "stripe": "17.7.0",
+    "tailwind-merge": "3.2.0",
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
+    "@tailwindcss/postcss": "4.1.4",
+    "@types/node": "22.14.1",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "eslint": "9.26.0",
+    "eslint-config-next": "15.3.1",
+    "tailwindcss": "4.1.4",
+    "typescript": "5.8.3"
+  }
+}
